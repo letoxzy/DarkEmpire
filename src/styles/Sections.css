@@ -665,3 +665,71 @@
   color: var(--muted);
   text-transform: uppercase;
 }
+
+@media (max-width: 680px) {
+  .de-modal {
+    padding: 2rem 1.25rem;
+    max-width: 95vw;
+    width: 95vw;
+  }
+
+  .de-modal-avatar {
+    width: 80px;
+    height: 80px;
+    font-size: 2.2rem;
+  }
+
+  .de-modal-name {
+    font-size: 1.1rem;
+  }
+
+  .de-modal-bio {
+    font-size: 0.88rem;
+  }
+
+  .de-modal-stats {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .de-modal-stat-divider {
+    width: 60px;
+    height: 1px;
+  }
+
+  .de-modal-stat-num {
+    font-size: 1.1rem;
+  }
+
+  .de-modal-game {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .de-modal {
+    padding: 1.5rem 1rem;
+  }
+
+  .de-modal-avatar {
+    width: 70px;
+    height: 70px;
+  }
+
+  .de-modal-name {
+    font-size: 1rem;
+    letter-spacing: 0;
+  }
+
+  .de-modal-stats {
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+
+  .de-modal-badge {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    padding: 0.25rem 0.75rem;
+  }
+}

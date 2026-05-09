@@ -13,15 +13,17 @@
   text-align: center;
 }
 
+/* DEFAULT — Desktop image */
 .de-hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url("/src/assets/Clanmaster2.jpeg");
-  background-size: contain;
-  background-position: center;
+  background-image: url("/assets/Desktophero.png");
+  background-size: cover;
+  background-position: center center;
   background-repeat: no-repeat;
   background-color: #050505;
-  filter: blur(2px);
+  background-attachment: fixed;
+  filter: blur(4px);
   transform: scale(1.05);
 }
 
@@ -31,12 +33,39 @@
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(5, 5, 5, 0.1) 0%,
-    rgba(5, 5, 5, 0.2) 40%,
+    rgba(5, 5, 5, 0.1)  0%,
+    rgba(5, 5, 5, 0.15) 40%,
     rgba(5, 5, 5, 0.85) 75%,
-    rgba(5, 5, 5, 1) 100%
+    rgba(5, 5, 5, 1)    100%
   );
 }
+
+/* MOBILE — Switch to mobile image */
+@media (max-width: 100px) {
+  .de-hero {
+    min-height: 130svh;
+    padding-top: 8rem;
+    padding-bottom: 6rem;
+  }
+
+  .de-hero-bg {
+    background-image: url("/assets/MobileHero.png");
+    background-size: cover;
+    background-position: top center;
+    background-attachment: scroll;
+    filter: blur(2px);
+    transform: scaleX(0.75);
+  }
+}
+
+@media (max-width: 420px) {
+  .de-hero-bg {
+    background-image: url("/assets/MobileHero.png");
+    background-size: contain;
+  }
+}
+
+
 
 .de-hero-skull {
   width: clamp(100px, 20vw, 180px);

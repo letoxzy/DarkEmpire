@@ -1,5 +1,4 @@
 import "../styles/Hero.css";
-import logo from "/src/assets/logo.png";
 
 const WHATSAPP_LINK = "https://chat.whatsapp.com/ILrD9Lkbajv809fVfwj5lD";
 
@@ -16,7 +15,7 @@ export default function Hero({ smoothScroll }) {
       <div className="de-hero-bg" />
 
       <div className="de-hero-skull">
-        <img src={logo} alt="DarkEmpire Logo" />
+        <img src="/assets/logo.png" alt="DarkEmpire Logo" />
       </div>
       <p className="de-hero-eyebrow">Call of Duty Mobile · Elite Clan</p>
 

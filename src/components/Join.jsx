@@ -1,6 +1,5 @@
 import { Reveal } from "./Reveal";
 import "../styles/Sections.css";
-import logo from "/src/assets/logo.png";
 
 const WHATSAPP_LINK = "https://chat.whatsapp.com/ILrD9Lkbajv809fVfwj5lD";
 
@@ -18,7 +17,7 @@ export default function Join() {
       <div className="de-join-inner">
         <Reveal>
           <div className="de-join-skull">
-            <img src={logo} alt="DarkEmpire Logo" />
+            <img src="/assets/logo.png" alt="DarkEmpire Logo" />
           </div>
         </Reveal>
         <Reveal delay="de-d1">

@@ -1,18 +1,13 @@
 import { useState } from "react";
 import { Reveal } from "./Reveal";
 import "../styles/Sections.css";
-import img1 from "/src/assets/Clanwaar.png";
-import img2 from "/src/assets/TopScores.png";
-import img3 from "/src/assets/RankedHighlights.png";
-import img4 from "/src/assets/kill.png";
-// import img5 from "/src/assets/gallery5.jpg";
 
 const GALLERY = [
-  { image: { img1 }, label: "Clan War Victory" },
-  { image: { img2 }, label: "Top Score Gameplay" },
-  { image: { img3 }, label: "Ranked Highlights" },
-  { image: { img4 }, label: "Kill Streak" },
-  { image: { img5 }, label: "Clan Lineup" },
+  { image: "/assets/Clanwaar.png", label: "Clan War Victory" },
+  { image: "/assets/TopScores.png", label: "Top Score Gameplay" },
+  { image: "/assets/RankedHighlights.png", label: "Ranked Highlights" },
+  { image: "/assets/kill.png", label: "Kill Streak" },
+  { image: "/assets/gallery5.jpg", label: "Clan Lineup" },
 ];
 
 export default function Gallery() {
