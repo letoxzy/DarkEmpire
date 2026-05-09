@@ -1,14 +1,11 @@
 import "../styles/Sections.css";
+import logo from "/src/assets/logo.png";
 
 export default function Footer() {
   return (
     <footer className="de-footer">
       <div className="de-footer-logo">
-        <img
-          src="/src/assets/logo.png"
-          alt="logo"
-          className="de-footer-logo-img"
-        />
+        <img src={logo} alt="logo" className="de-footer-logo-img" />
         DarkEmpire
       </div>
       <p className="de-footer-tagline">

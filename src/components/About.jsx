@@ -1,5 +1,6 @@
 import { Reveal, RevealRight } from "./Reveal";
 import "../styles/Sections.css";
+import logo from "/src/assets/logo.png";
 
 const VALUES = [
   ["🎯", "Precision over chaos"],
@@ -64,7 +65,7 @@ export default function About() {
               <div className="de-emblem-ring">
                 <div className="de-emblem-inner">
                   <img
-                    src="/src/assets/logo.png"
+                    src={logo}
                     alt="DarkEmpire Logo"
                     className="de-emblem-img"
                   />
