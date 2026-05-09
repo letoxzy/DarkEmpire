@@ -1,0 +1,139 @@
+/* ============================
+   NAVBAR
+============================ */
+.de-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 2rem;
+  background: rgba(5,5,5,0.95);
+  border-bottom: 1px solid rgba(139,0,0,0.4);
+  backdrop-filter: blur(10px);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.de-nav.scrolled {
+  background: rgba(5,5,5,0.99);
+  box-shadow: 0 4px 30px rgba(139,0,0,0.15);
+}
+
+.de-nav-logo {
+  font-family: 'Black Ops One', cursive;
+  font-size: 1.3rem;
+  color: var(--blood-bright);
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(204,0,0,0.5);
+  white-space: nowrap;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.de-nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+.de-nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+.de-nav-links a:hover,
+.de-nav-links a.active {
+  color: var(--blood-bright);
+}
+
+.de-nav-cta {
+  background: var(--blood);
+  color: #fff;
+  border: 1px solid var(--blood-bright);
+  padding: 0.45rem 1.2rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  transition: all 0.2s;
+}
+.de-nav-cta:hover { background: var(--blood-bright); }
+
+/* HAMBURGER */
+.de-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.de-hamburger span {
+  display: block;
+  width: 24px; height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.de-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.de-hamburger.open span:nth-child(2) { opacity: 0; }
+.de-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* MOBILE MENU */
+.de-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 56px; left: 0; right: 0;
+  z-index: 190;
+  background: rgba(5,5,5,0.98);
+  border-bottom: 1px solid rgba(139,0,0,0.4);
+  padding: 1.5rem 2rem;
+  flex-direction: column;
+  gap: 1.2rem;
+  backdrop-filter: blur(10px);
+}
+.de-mobile-menu.open { display: flex; }
+.de-mobile-menu a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(139,0,0,0.2);
+  transition: color 0.2s;
+  cursor: pointer;
+}
+.de-mobile-menu a:hover { color: var(--blood-bright); }
+.de-mob-join {
+  background: var(--blood) !important;
+  color: #fff !important;
+  text-align: center;
+  padding: 0.8rem !important;
+  border: 1px solid var(--blood-bright) !important;
+  border-radius: 2px;
+  margin-top: 0.5rem;
+  text-decoration: none !important;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .de-nav-links { display: none; }
+  .de-nav-cta { display: none; }
+  .de-hamburger { display: flex; }
+}
+@media (max-width: 680px) {
+  .de-nav { padding: 0.75rem 1.25rem; }
+}
