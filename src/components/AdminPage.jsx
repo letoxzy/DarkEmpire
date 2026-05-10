@@ -250,7 +250,11 @@ export default function AdminPage() {
     <div className="admin-wrap">
       <div className="admin-header">
         <div className="admin-header-left">
-          <span className="admin-header-logo">💀</span>
+          <img
+            src="/assets/logo.png"
+            alt="logo"
+            className="admin-header-logo-img"
+          />
           <div>
             <h1 className="admin-header-title">DarkEmpire Admin</h1>
             <p className="admin-header-email">{user.email}</p>
