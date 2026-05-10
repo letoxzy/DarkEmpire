@@ -177,3 +177,114 @@
 @media (max-width: 420px) {
   .de-hero-stats { gap: 1.2rem; }
 }
+
+@media (max-width: 680px) {
+  .de-hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 1rem;
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  .de-stat-item {
+    text-align: center;
+  }
+
+  .de-stat-num {
+    font-size: clamp(1.4rem, 7vw, 2rem);
+  }
+
+  .de-stat-label {
+    font-size: clamp(0.6rem, 2.5vw, 0.75rem);
+    letter-spacing: 1px;
+  }
+}
+
+@media (max-width: 420px) {
+  .de-hero-stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem 0.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .de-stat-num {
+    font-size: clamp(1.2rem, 6vw, 1.6rem);
+  }
+}
+
+.de-hero-motto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+  position: relative;
+  z-index: 1;
+  animation: de-fade-up 0.8s 0.4s ease both;
+}
+
+.de-motto-part1 {
+  font-family: 'Black Ops One', cursive;
+  font-size: clamp(0.85rem, 3vw, 1.2rem);
+  color: #aaa;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.de-motto-part1::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #aaa);
+  animation: de-underline-grow 1.5s 1s ease forwards;
+}
+
+@keyframes de-underline-grow {
+  to { width: 100%; }
+}
+
+.de-motto-divider {
+  color: var(--blood-bright);
+  font-size: 1rem;
+  animation: de-pulse-skull 3s ease-in-out infinite;
+  text-shadow: 0 0 15px rgba(204,0,0,0.8);
+}
+
+.de-motto-part2 {
+  font-family: 'Black Ops One', cursive;
+  font-size: clamp(0.85rem, 3vw, 1.2rem);
+  color: var(--blood-bright);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(204,0,0,0.5);
+  position: relative;
+}
+
+.de-motto-part2::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  right: 0;
+  width: 0%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--blood-bright), transparent);
+  animation: de-underline-grow-right 1.5s 1s ease forwards;
+}
+
+@keyframes de-underline-grow-right {
+  to { width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .de-hero-motto {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .de-motto-divider { transform: rotate(90deg); }
+}
