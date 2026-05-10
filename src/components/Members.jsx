@@ -7,7 +7,8 @@ import { db } from "../firebase";
 
 const MEMBERS = [
   {
-    image: "/assets/BlackOmega.jpg",
+    id: "blackomega",
+    image: "/assets/logo.png",
     name: "ÐX¹_BlackOmega",
     rank: "Clan Leader",
     gameRank: "Legendary",
@@ -16,7 +17,8 @@ const MEMBERS = [
     bio: "The founder and leader of DarkEmpire. Feared on every battlefield.",
   },
   {
-    image: "/assets/Letoxzy.png",
+    id: "letoxzy",
+    image: "/assets/logo.png",
     name: "ÐX¹_Letoxzy",
     rank: "Co-Leader",
     gameRank: "Legendary",
@@ -25,7 +27,8 @@ const MEMBERS = [
     bio: "Second in command. Tactical mastermind and clutch player.",
   },
   {
-    image: "/assets/Loki.jpg",
+    id: "loki",
+    image: "/assets/logo.png",
     name: "ÐX¹_Loki",
     rank: "Elite Member",
     gameRank: "Legendary",
@@ -34,7 +37,8 @@ const MEMBERS = [
     bio: "Aggressive rusher with unmatched game sense.",
   },
   {
-    image: "/assets/Asiko.jpg",
+    id: "asiko",
+    image: "/assets/logo.png",
     name: "ÐX¹_Asiko",
     rank: "Member",
     gameRank: "Legendary",
@@ -43,7 +47,8 @@ const MEMBERS = [
     bio: "Consistent performer and reliable squad player.",
   },
   {
-    image: "/assets/CHIEF.jpg",
+    id: "chief",
+    image: "/assets/logo.png",
     name: "ÐX¹_CHIEF",
     rank: "Member",
     gameRank: "Grandmaster",
@@ -52,7 +57,8 @@ const MEMBERS = [
     bio: "Sharp shooter. Never misses under pressure.",
   },
   {
-    image: "/assets/THE_DUKE.jpg",
+    id: "theduke",
+    image: "/assets/logo.png",
     name: "ÐX¹_THE_DUKE",
     rank: "Member",
     gameRank: "Pro",
@@ -61,7 +67,8 @@ const MEMBERS = [
     bio: "The wall of DarkEmpire. Defensive anchor of the team.",
   },
   {
-    image: "/assets/Palmer.jpg",
+    id: "palmer",
+    image: "/assets/logo.png",
     name: "ÐX¹_Palmer",
     rank: "Member",
     gameRank: "Pro",
@@ -70,7 +77,8 @@ const MEMBERS = [
     bio: "Versatile player who adapts to any game mode.",
   },
   {
-    image: "/assets/Lynx.jpg",
+    id: "lynx",
+    image: "/assets/logo.png",
     name: "ÐX¹_Lynx",
     rank: "Member",
     gameRank: "Master",
@@ -113,19 +121,24 @@ export default function Members() {
     fetchData();
   }, []);
 
-  const getImage = (member) => images[member.id] || member.image;
+  const getImage = (member) => {
+    return images[member.id] || member.image;
+  };
 
   const handleUpload = async (memberId, url) => {
+    // Update local state immediately
     setImages((prev) => ({ ...prev, [memberId]: url }));
     if (selected?.id === memberId) {
       setSelected((prev) => ({ ...prev, image: url }));
     }
 
-    // Save to Firestore so everyone sees it
-    const docRef = doc(db, "clan", "memberImages");
-    const docSnap = await getDoc(docRef);
-    const existing = docSnap.exists() ? docSnap.data() : {};
-    await setDoc(docRef, { ...existing, [memberId]: url });
+    // Save to Firestore — each member has their own field
+    try {
+      const docRef = doc(db, "clan", "memberImages");
+      await setDoc(docRef, { [memberId]: url }, { merge: true });
+    } catch (error) {
+      console.error("Upload save error:", error);
+    }
   };
 
   return (
