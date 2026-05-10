@@ -23,7 +23,6 @@ export default function Hero({ smoothScroll }) {
         <span>Dark </span>Empire
       </h1>
 
-      <p className="de-hero-sub">We Don't Play. We Dominate.</p>
       <p className="de-hero-motto">
         <span className="de-motto-part1">SHADOW THE LIGHT</span>
         <span className="de-motto-divider">✦</span>
