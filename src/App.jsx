@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import AdminPage from "./components/AdminPage";
 
 import "./styles/global.css";
 
@@ -52,6 +53,11 @@ export default function App() {
     const top = el.getBoundingClientRect().top + window.pageYOffset - navH;
     window.scrollTo({ top, behavior: "smooth" });
   };
+
+  // Show admin page if URL is /admin
+  if (window.location.pathname === "/admin") {
+    return <AdminPage />;
+  }
 
   return (
     <>

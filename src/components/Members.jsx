@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Reveal } from "./Reveal";
 import MemberUpload from "./MemberUpload";
 import "../styles/Sections.css";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 const MEMBERS = [
   {
@@ -91,19 +93,39 @@ const RANK_COLORS = {
 export default function Members() {
   const [selected, setSelected] = useState(null);
   const [images, setImages] = useState({});
+  const [uploadEnabled, setUploadEnabled] = useState(true);
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("de_member_images") || "{}");
-    setImages(saved);
+    const fetchData = async () => {
+      // Load member images from Firestore
+      const docRef = doc(db, "clan", "memberImages");
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setImages(docSnap.data());
+      }
+
+      // Load upload toggle setting
+      const settingsSnap = await getDoc(doc(db, "clan", "settings"));
+      if (settingsSnap.exists()) {
+        setUploadEnabled(settingsSnap.data().uploadEnabled ?? true);
+      }
+    };
+    fetchData();
   }, []);
 
   const getImage = (member) => images[member.id] || member.image;
 
-  const handleUpload = (memberId, url) => {
+  const handleUpload = async (memberId, url) => {
     setImages((prev) => ({ ...prev, [memberId]: url }));
     if (selected?.id === memberId) {
       setSelected((prev) => ({ ...prev, image: url }));
     }
+
+    // Save to Firestore so everyone sees it
+    const docRef = doc(db, "clan", "memberImages");
+    const docSnap = await getDoc(docRef);
+    const existing = docSnap.exists() ? docSnap.data() : {};
+    await setDoc(docRef, { ...existing, [memberId]: url });
   };
 
   return (
@@ -178,10 +200,12 @@ export default function Members() {
             </div>
 
             {/* Upload button */}
-            <MemberUpload
-              memberName={selected.id}
-              onUpload={(url) => handleUpload(selected.id, url)}
-            />
+            {uploadEnabled && (
+              <MemberUpload
+                memberName={selected.id}
+                onUpload={(url) => handleUpload(selected.id, url)}
+              />
+            )}
 
             <div className="de-modal-badge">{selected.rank}</div>
             <h2 className="de-modal-name">{selected.name}</h2>

@@ -1,0 +1,356 @@
+/* ============================
+   ADMIN PAGE
+============================ */
+.admin-login-wrap {
+  min-height: 100vh;
+  background: var(--darker);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.admin-login-box {
+  background: var(--charcoal);
+  border: 1px solid var(--blood-bright);
+  box-shadow: 0 0 60px rgba(204,0,0,0.2);
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+}
+
+.admin-login-logo {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 0 20px rgba(204,0,0,0.6));
+}
+
+.admin-login-title {
+  font-family: 'Black Ops One', cursive;
+  font-size: 1.8rem;
+  color: var(--blood-bright);
+  letter-spacing: 4px;
+  margin-bottom: 0.25rem;
+}
+
+.admin-login-sub {
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-input {
+  background: rgba(139,0,0,0.08);
+  border: 1px solid rgba(204,0,0,0.3);
+  color: var(--text);
+  padding: 0.75rem 1rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.admin-input:focus { border-color: var(--blood-bright); }
+.admin-input.sm { width: auto; flex: 1; min-width: 100px; padding: 0.5rem 0.75rem; font-size: 0.85rem; }
+.admin-input::placeholder { color: var(--muted); }
+
+.admin-select {
+  background: #1a0000;
+  border: 1px solid rgba(204,0,0,0.3);
+  color: var(--text);
+  padding: 0.75rem 0.5rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.admin-select:focus { border-color: var(--blood-bright); }
+.admin-select.sm { padding: 0.5rem 0.4rem; font-size: 0.82rem; flex: 1; min-width: 90px; }
+
+.admin-error {
+  color: #ff4444;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.admin-btn-login {
+  background: linear-gradient(135deg, #8B0000, #CC0000);
+  color: #fff;
+  border: none;
+  padding: 0.85rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 20px rgba(204,0,0,0.3);
+}
+.admin-btn-login:hover {
+  background: linear-gradient(135deg, #CC0000, #FF2222);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(204,0,0,0.5);
+}
+
+/* DASHBOARD */
+.admin-wrap {
+  min-height: 100vh;
+  background: var(--darker);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(5,5,5,0.95);
+  border-bottom: 1px solid rgba(139,0,0,0.4);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.admin-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-header-logo {
+  font-size: 2rem;
+  filter: drop-shadow(0 0 10px rgba(204,0,0,0.6));
+}
+
+.admin-header-title {
+  font-family: 'Black Ops One', cursive;
+  font-size: 1.2rem;
+  color: var(--blood-bright);
+  letter-spacing: 2px;
+}
+
+.admin-header-email {
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+.admin-btn-logout {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--muted);
+  padding: 0.4rem 1rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.admin-btn-logout:hover {
+  border-color: var(--blood-bright);
+  color: var(--blood-bright);
+}
+
+.admin-body {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.admin-card {
+  background: var(--charcoal);
+  border: 1px solid rgba(139,0,0,0.25);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-card-title {
+  font-family: 'Black Ops One', cursive;
+  font-size: 1.1rem;
+  color: #fff;
+  letter-spacing: 2px;
+}
+
+.admin-card-desc {
+  font-size: 0.9rem;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+/* TOGGLE */
+.admin-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.admin-toggle-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.admin-toggle-label.on  { color: #10b981; }
+.admin-toggle-label.off { color: #ff4444; }
+
+.admin-toggle {
+  width: 56px;
+  height: 28px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 14px;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.3s, border-color 0.3s;
+}
+.admin-toggle.active {
+  background: rgba(16,185,129,0.3);
+  border-color: #10b981;
+}
+.admin-toggle-thumb {
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #aaa;
+  transition: transform 0.3s, background 0.3s;
+}
+.admin-toggle.active .admin-toggle-thumb {
+  transform: translateX(28px);
+  background: #10b981;
+}
+
+/* NEW MEMBER GRID */
+.admin-new-member-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.admin-btn-add {
+  background: linear-gradient(135deg, #8B0000, #CC0000);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+}
+.admin-btn-add:hover {
+  background: linear-gradient(135deg, #CC0000, #FF2222);
+  transform: translateY(-2px);
+}
+
+/* MEMBERS LIST */
+.admin-members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+
+.admin-member-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0.75rem;
+  background: var(--dark);
+  border: 1px solid rgba(139,0,0,0.2);
+}
+
+.admin-member-id {
+  font-family: 'Black Ops One', cursive;
+  font-size: 0.75rem;
+  color: var(--blood-bright);
+  letter-spacing: 1px;
+  white-space: nowrap;
+  min-width: 80px;
+}
+
+.admin-btn-remove {
+  background: rgba(139,0,0,0.3);
+  border: 1px solid var(--blood);
+  color: #fff;
+  width: 32px; height: 32px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.admin-btn-remove:hover { background: var(--blood-bright); }
+
+/* SAVE BUTTON */
+.admin-btn-save {
+  background: linear-gradient(135deg, #8B0000, #CC0000);
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s;
+  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+  box-shadow: 0 4px 20px rgba(204,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  align-self: center;
+  min-width: 280px;
+}
+.admin-btn-save:hover {
+  background: linear-gradient(135deg, #CC0000, #FF2222);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(204,0,0,0.5);
+}
+.admin-btn-save.saved {
+  background: linear-gradient(135deg, #065f46, #10b981);
+  box-shadow: 0 4px 20px rgba(16,185,129,0.3);
+}
+
+@media (max-width: 680px) {
+  .admin-header { padding: 0.75rem 1rem; }
+  .admin-body { padding: 1rem; }
+  .admin-member-row { gap: 0.4rem; }
+  .admin-btn-save { min-width: 100%; }
+}
