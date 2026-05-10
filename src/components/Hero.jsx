@@ -20,7 +20,7 @@ export default function Hero({ smoothScroll }) {
       <p className="de-hero-eyebrow">Call of Duty Mobile · Elite Clan</p>
 
       <h1 className="de-hero-title">
-        <span>Dark</span>Empire
+        <span>Dark </span>Empire
       </h1>
 
       <p className="de-hero-sub">We Don't Play. We Dominate.</p>

@@ -6,7 +6,7 @@ const GALLERY = [
   { image: "/assets/Clanwaar.png", label: "Clan War Victory" },
   { image: "/assets/TopScores.png", label: "Top Score Gameplay" },
   { image: "/assets/RankedHighlights.png", label: "Ranked Highlights" },
-  { image: "/assets/kill.png", label: "Kill Streak" },
+  { image: "/assets/Kill.png", label: "Kill Streak" },
   { image: "/assets/gallery5.jpg", label: "Clan Lineup" },
 ];
 

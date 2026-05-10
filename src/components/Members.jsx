@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Reveal } from "./Reveal";
+import MemberUpload from "./MemberUpload";
 import "../styles/Sections.css";
 
-// ✏️ Update with your real members
 const MEMBERS = [
   {
-    image: "/src/assets/BlackOmega.jpg",
+    image: "/assets/BlackOmega.jpg",
     name: "ÐX¹_BlackOmega",
     rank: "Clan Leader",
     gameRank: "Legendary",
@@ -14,7 +14,7 @@ const MEMBERS = [
     bio: "The founder and leader of DarkEmpire. Feared on every battlefield.",
   },
   {
-    image: "/src/assets/Letoxzy.jpg",
+    image: "/assets/Letoxzy.png",
     name: "ÐX¹_Letoxzy",
     rank: "Co-Leader",
     gameRank: "Legendary",
@@ -23,7 +23,7 @@ const MEMBERS = [
     bio: "Second in command. Tactical mastermind and clutch player.",
   },
   {
-    image: "/src/assets/Loki.jpg",
+    image: "/assets/Loki.jpg",
     name: "ÐX¹_Loki",
     rank: "Elite Member",
     gameRank: "Legendary",
@@ -32,7 +32,7 @@ const MEMBERS = [
     bio: "Aggressive rusher with unmatched game sense.",
   },
   {
-    image: "/src/assets/Asiko.jpg",
+    image: "/assets/Asiko.jpg",
     name: "ÐX¹_Asiko",
     rank: "Member",
     gameRank: "Legendary",
@@ -41,16 +41,16 @@ const MEMBERS = [
     bio: "Consistent performer and reliable squad player.",
   },
   {
-    image: "/src/assets/CHIEF.jpg",
+    image: "/assets/CHIEF.jpg",
     name: "ÐX¹_CHIEF",
     rank: "Member",
-    gameRank: "Grandmaster  ",
+    gameRank: "Grandmaster",
     playStyle: "BR Only",
     weapon: "Fennec",
     bio: "Sharp shooter. Never misses under pressure.",
   },
   {
-    image: "/src/assets/THE_DUKE.jpg",
+    image: "/assets/THE_DUKE.jpg",
     name: "ÐX¹_THE_DUKE",
     rank: "Member",
     gameRank: "Pro",
@@ -59,28 +59,27 @@ const MEMBERS = [
     bio: "The wall of DarkEmpire. Defensive anchor of the team.",
   },
   {
-    image: "/src/assets/Palmer.jpg",
+    image: "/assets/Palmer.jpg",
     name: "ÐX¹_Palmer",
     rank: "Member",
     gameRank: "Pro",
     playStyle: "Hybrid Player",
-    weapon: "",
+    weapon: "HVK-30",
     bio: "Versatile player who adapts to any game mode.",
   },
   {
-    image: "/src/assets/Lynx.jpg",
+    image: "/assets/Lynx.jpg",
     name: "ÐX¹_Lynx",
     rank: "Member",
     gameRank: "Master",
     playStyle: "Hybrid Player",
-    weapon: "BY",
+    weapon: "BY15",
     bio: "Stealthy and unpredictable. A nightmare in ranked.",
   },
 ];
 
 const DELAYS = ["de-d1", "de-d2", "de-d3", "de-d4", "de-d5"];
 
-// Color per game rank
 const RANK_COLORS = {
   Legendary: "#FFD700",
   Grandmaster: "#CC0000",
@@ -91,6 +90,21 @@ const RANK_COLORS = {
 
 export default function Members() {
   const [selected, setSelected] = useState(null);
+  const [images, setImages] = useState({});
+
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("de_member_images") || "{}");
+    setImages(saved);
+  }, []);
+
+  const getImage = (member) => images[member.name] || member.image;
+
+  const handleUpload = (memberName, url) => {
+    setImages((prev) => ({ ...prev, [memberName]: url }));
+    if (selected?.name === memberName) {
+      setSelected((prev) => ({ ...prev, image: url }));
+    }
+  };
 
   return (
     <section className="de-section de-section-members" id="members">
@@ -116,7 +130,7 @@ export default function Members() {
                 style={{ cursor: "pointer" }}
               >
                 <div className="de-member-avatar">
-                  <img src={m.image} alt="" />
+                  <img src={getImage(m)} alt={m.name} />
                 </div>
                 <div className="de-member-name">{m.name}</div>
                 <div className="de-member-rank">{m.rank}</div>
@@ -160,15 +174,20 @@ export default function Members() {
             </button>
 
             <div className="de-modal-avatar">
-              <img src={selected.image} alt={selected.name} />
+              <img src={getImage(selected)} alt={selected.name} />
             </div>
+
+            {/* Upload button */}
+            <MemberUpload
+              memberName={selected.name}
+              onUpload={(url) => handleUpload(selected.name, url)}
+            />
 
             <div className="de-modal-badge">{selected.rank}</div>
             <h2 className="de-modal-name">{selected.name}</h2>
             <p className="de-modal-bio">{selected.bio}</p>
 
             <div className="de-modal-stats">
-              {/* Game Rank */}
               <div className="de-modal-stat">
                 <span
                   className="de-modal-stat-num"
@@ -183,7 +202,6 @@ export default function Members() {
 
               <div className="de-modal-stat-divider" />
 
-              {/* Play Style */}
               <div className="de-modal-stat">
                 <span
                   className="de-modal-stat-num"
@@ -196,7 +214,6 @@ export default function Members() {
 
               <div className="de-modal-stat-divider" />
 
-              {/* Best Weapon */}
               <div className="de-modal-stat">
                 <span
                   className="de-modal-stat-num"
