@@ -105,17 +105,21 @@ export default function Members() {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Load member images from Firestore
-      const docRef = doc(db, "clan", "memberImages");
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setImages(docSnap.data());
-      }
+      try {
+        // Load member images from Firestore
+        const docRef = doc(db, "clan", "memberImages");
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setImages(docSnap.data());
+        }
 
-      // Load upload toggle setting
-      const settingsSnap = await getDoc(doc(db, "clan", "settings"));
-      if (settingsSnap.exists()) {
-        setUploadEnabled(settingsSnap.data().uploadEnabled ?? true);
+        // Load upload toggle setting
+        const settingsSnap = await getDoc(doc(db, "clan", "settings"));
+        if (settingsSnap.exists()) {
+          setUploadEnabled(settingsSnap.data().uploadEnabled ?? true);
+        }
+      } catch (error) {
+        console.error("Firestore fetch error:", error);
       }
     };
     fetchData();
