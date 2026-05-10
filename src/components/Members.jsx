@@ -97,11 +97,11 @@ export default function Members() {
     setImages(saved);
   }, []);
 
-  const getImage = (member) => images[member.name] || member.image;
+  const getImage = (member) => images[member.id] || member.image;
 
-  const handleUpload = (memberName, url) => {
-    setImages((prev) => ({ ...prev, [memberName]: url }));
-    if (selected?.name === memberName) {
+  const handleUpload = (memberId, url) => {
+    setImages((prev) => ({ ...prev, [memberId]: url }));
+    if (selected?.id === memberId) {
       setSelected((prev) => ({ ...prev, image: url }));
     }
   };
@@ -179,8 +179,8 @@ export default function Members() {
 
             {/* Upload button */}
             <MemberUpload
-              memberName={selected.name}
-              onUpload={(url) => handleUpload(selected.name, url)}
+              memberName={selected.id}
+              onUpload={(url) => handleUpload(selected.id, url)}
             />
 
             <div className="de-modal-badge">{selected.rank}</div>
