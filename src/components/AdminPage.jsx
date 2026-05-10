@@ -202,7 +202,9 @@ export default function AdminPage() {
     return (
       <div className="admin-login-wrap">
         <div className="admin-login-box">
-          <div className="admin-login-logo">💀</div>
+          <div className="admin-login-logo">
+            <img src="/assets/logo.png" alt="DarkEmpire Logo" />
+          </div>
           <h1 className="admin-login-title">DARKEMPIRE</h1>
           <p className="admin-login-sub">Admin Access Only</p>
 
