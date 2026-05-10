@@ -3,12 +3,13 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey:            "your_api_key",
-  authDomain:        "your_auth_domain",
-  projectId:         "your_project_id",
-  storageBucket:     "your_storage_bucket",
-  messagingSenderId: "your_messaging_sender_id",
-  appId:             "your_app_id",
+  apiKey:            "AIzaSyCWZ5qQzcuGoGvv_Es7ozi7d8zpdiQbC4I",
+  authDomain:        "darkempire-clan.firebaseapp.com",
+  projectId:         "darkempire-clan",
+  storageBucket:     "darkempire-clan.firebasestorage.app",
+  messagingSenderId: "4206683307",
+  appId:             "1:4206683307:web:fcf37bf30f53644faf03ee",
+  measurementId:     "G-24ZZ6F7PFY",
 };
 
 const app = initializeApp(firebaseConfig);
