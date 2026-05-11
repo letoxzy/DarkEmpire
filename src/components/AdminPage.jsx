@@ -170,7 +170,13 @@ export default function AdminPage() {
 
   const addMember = () => {
     if (!newMember.id || !newMember.name) return;
-    setMembers((prev) => [...prev, { ...newMember }]);
+    setMembers((prev) => [
+      ...prev,
+      {
+        ...newMember,
+        image: "/assets/logo.png", // ← add default image
+      },
+    ]);
     setNewMember({
       id: "",
       name: "",
