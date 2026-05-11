@@ -7,7 +7,7 @@ const REQUIREMENTS = [
   ["K/D", "1.5+"],
   ["Rank", "Legendary"],
   ["Active", "Daily"],
-  ["Age", "16+"],
+  ["Age", "17+"],
   ["Clan Wars", "Required"],
 ];
 
