@@ -4,7 +4,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import "../styles/Admin.css";
 
@@ -97,11 +97,11 @@ export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
   const [loading, setLoading] = useState(false);
-
   const [uploadEnabled, setUploadEnabled] = useState(true);
   const [members, setMembers] = useState(MEMBERS_DEFAULT);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(null); // ← moved inside
 
   const [newMember, setNewMember] = useState({
     id: "",
@@ -113,13 +113,11 @@ export default function AdminPage() {
     bio: "",
   });
 
-  // Auth state
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => setUser(u));
     return () => unsub();
   }, []);
 
-  // Load settings from Firestore
   useEffect(() => {
     if (!user) return;
     const load = async () => {
@@ -207,7 +205,6 @@ export default function AdminPage() {
           </div>
           <h1 className="admin-login-title">DARKEMPIRE</h1>
           <p className="admin-login-sub">Admin Access Only</p>
-
           <form onSubmit={handleLogin} className="admin-login-form">
             <input
               type="email"
@@ -417,12 +414,7 @@ export default function AdminPage() {
                 />
                 <button
                   className="admin-btn-remove"
-                  onClick={() => {
-                    const confirm = window.confirm(
-                      `Are you sure you want to remove ${m.name}?\nRole: ${m.rank}`,
-                    );
-                    if (confirm) removeMember(m.id);
-                  }}
+                  onClick={() => setConfirmDelete(m)}
                 >
                   ✕
                 </button>
@@ -448,6 +440,45 @@ export default function AdminPage() {
           )}
         </button>
       </div>
+
+      {/* CONFIRM DELETE MODAL */}
+      {confirmDelete && (
+        <div
+          className="admin-confirm-overlay"
+          onClick={() => setConfirmDelete(null)}
+        >
+          <div
+            className="admin-confirm-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="admin-confirm-icon">⚠️</div>
+            <h2 className="admin-confirm-title">Remove Member?</h2>
+            <p className="admin-confirm-name">{confirmDelete.name}</p>
+            <div className="admin-confirm-badge">{confirmDelete.rank}</div>
+            <p className="admin-confirm-desc">
+              This will permanently remove this warrior from the empire. This
+              action cannot be undone.
+            </p>
+            <div className="admin-confirm-btns">
+              <button
+                className="admin-confirm-cancel"
+                onClick={() => setConfirmDelete(null)}
+              >
+                Cancel
+              </button>
+              <button
+                className="admin-confirm-delete"
+                onClick={() => {
+                  removeMember(confirmDelete.id);
+                  setConfirmDelete(null);
+                }}
+              >
+                🗑 Remove
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

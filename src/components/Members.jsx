@@ -232,7 +232,7 @@ export default function Members() {
                 </button>
                 {!showExtra && (
                   <p className="de-members-more-sub">
-                    WE ARE IN NEED OF ACTIVE PLAYERS
+                    WE ARE IN NEED OF ACTIVE PLAYERS 😁
                   </p>
                 )}
               </div>
