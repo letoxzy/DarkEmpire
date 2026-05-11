@@ -104,29 +104,29 @@ export default function Members() {
   const [selected, setSelected] = useState(null);
   const [images, setImages] = useState({});
   const [uploadEnabled, setUploadEnabled] = useState(true);
-  const [extraMembers, setExtraMembers] = useState([]);
+  const [allMembers, setAllMembers] = useState(MEMBERS); // ← added here
   const [showExtra, setShowExtra] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Load member images
         const docRef = doc(db, "clan", "memberImages");
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) setImages(docSnap.data());
 
+        // Load upload toggle
         const settingsSnap = await getDoc(doc(db, "clan", "settings"));
         if (settingsSnap.exists()) {
           setUploadEnabled(settingsSnap.data().uploadEnabled ?? true);
         }
 
-        // Load extra members added from admin
+        // Load ALL members from Firestore
         const membersSnap = await getDoc(doc(db, "clan", "memberList"));
-        if (membersSnap.exists()) {
-          const list = membersSnap.data().list ?? [];
-          // Filter out members already in MEMBERS array
-          const existingIds = MEMBERS.map((m) => m.id);
-          const extras = list.filter((m) => !existingIds.includes(m.id));
-          setExtraMembers(extras);
+        if (membersSnap.exists() && membersSnap.data().list?.length > 0) {
+          setAllMembers(membersSnap.data().list);
+        } else {
+          setAllMembers(MEMBERS);
         }
       } catch (error) {
         console.error("Firestore fetch error:", error);
@@ -154,7 +154,6 @@ export default function Members() {
     }
   };
 
-  const allMembers = [...MEMBERS, ...extraMembers];
   const visibleMembers = allMembers.slice(0, VISIBLE_COUNT);
   const hiddenMembers = allMembers.slice(VISIBLE_COUNT);
   const hiddenCount = hiddenMembers.length;
@@ -214,7 +213,6 @@ export default function Members() {
               </div>
             )}
 
-            {/* View more / hide button */}
             <Reveal>
               <div className="de-members-more">
                 <button
