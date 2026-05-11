@@ -98,25 +98,35 @@ const RANK_COLORS = {
   Platinum: "#34d399",
 };
 
+const VISIBLE_COUNT = 8;
+
 export default function Members() {
   const [selected, setSelected] = useState(null);
   const [images, setImages] = useState({});
   const [uploadEnabled, setUploadEnabled] = useState(true);
+  const [extraMembers, setExtraMembers] = useState([]);
+  const [showExtra, setShowExtra] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Load member images from Firestore
         const docRef = doc(db, "clan", "memberImages");
         const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setImages(docSnap.data());
-        }
+        if (docSnap.exists()) setImages(docSnap.data());
 
-        // Load upload toggle setting
         const settingsSnap = await getDoc(doc(db, "clan", "settings"));
         if (settingsSnap.exists()) {
           setUploadEnabled(settingsSnap.data().uploadEnabled ?? true);
+        }
+
+        // Load extra members added from admin
+        const membersSnap = await getDoc(doc(db, "clan", "memberList"));
+        if (membersSnap.exists()) {
+          const list = membersSnap.data().list ?? [];
+          // Filter out members already in MEMBERS array
+          const existingIds = MEMBERS.map((m) => m.id);
+          const extras = list.filter((m) => !existingIds.includes(m.id));
+          setExtraMembers(extras);
         }
       } catch (error) {
         console.error("Firestore fetch error:", error);
@@ -125,25 +135,51 @@ export default function Members() {
     fetchData();
   }, []);
 
-  const getImage = (member) => {
-    return images[member.id] || member.image;
-  };
+  const getImage = (member) =>
+    images[member.id] || member.image || "/assets/logo.png";
 
   const handleUpload = async (memberId, url) => {
-    // Update local state immediately
     setImages((prev) => ({ ...prev, [memberId]: url }));
     if (selected?.id === memberId) {
       setSelected((prev) => ({ ...prev, image: url }));
     }
-
-    // Save to Firestore — each member has their own field
     try {
-      const docRef = doc(db, "clan", "memberImages");
-      await setDoc(docRef, { [memberId]: url }, { merge: true });
+      await setDoc(
+        doc(db, "clan", "memberImages"),
+        { [memberId]: url },
+        { merge: true },
+      );
     } catch (error) {
       console.error("Upload save error:", error);
     }
   };
+
+  const allMembers = [...MEMBERS, ...extraMembers];
+  const visibleMembers = allMembers.slice(0, VISIBLE_COUNT);
+  const hiddenMembers = allMembers.slice(VISIBLE_COUNT);
+  const hiddenCount = hiddenMembers.length;
+
+  const MemberCard = ({ m, i }) => (
+    <Reveal key={m.id} delay={DELAYS[i % 5]}>
+      <div
+        className="de-member-card"
+        onClick={() => setSelected(m)}
+        style={{ cursor: "pointer" }}
+      >
+        <div className="de-member-avatar">
+          <img src={getImage(m)} alt={m.name} />
+        </div>
+        <div className="de-member-name">{m.name}</div>
+        <div className="de-member-rank">{m.rank}</div>
+        <div className="de-member-kd">
+          🏆{" "}
+          <span style={{ color: RANK_COLORS[m.gameRank] ?? "var(--gold)" }}>
+            {m.gameRank}
+          </span>
+        </div>
+      </div>
+    </Reveal>
+  );
 
   return (
     <section className="de-section de-section-members" id="members">
@@ -160,45 +196,74 @@ export default function Members() {
           <div className="de-divider" />
         </Reveal>
 
+        {/* Main visible members */}
         <div className="de-members-grid">
-          {MEMBERS.map((m, i) => (
-            <Reveal key={m.name} delay={DELAYS[i] ?? "de-d5"}>
-              <div
-                className="de-member-card"
-                onClick={() => setSelected(m)}
-                style={{ cursor: "pointer" }}
-              >
-                <div className="de-member-avatar">
-                  <img src={getImage(m)} alt={m.name} />
-                </div>
-                <div className="de-member-name">{m.name}</div>
-                <div className="de-member-rank">{m.rank}</div>
-                <div className="de-member-kd">
-                  🏆{" "}
-                  <span
-                    style={{ color: RANK_COLORS[m.gameRank] ?? "var(--gold)" }}
-                  >
-                    {m.gameRank}
-                  </span>
-                </div>
-              </div>
-            </Reveal>
+          {visibleMembers.map((m, i) => (
+            <MemberCard key={m.id} m={m} i={i} />
           ))}
         </div>
 
-        <Reveal>
-          <p
-            style={{
-              textAlign: "center",
-              color: "var(--muted)",
-              fontSize: "0.85rem",
-              marginTop: "1.25rem",
-              letterSpacing: "2px",
-            }}
-          >
-            0 MORE WARRIORS IN THE EMPIRE. WE ARE IN NEED OF ACTIVE PLAYERS
-          </p>
-        </Reveal>
+        {/* Extra members — show/hide */}
+        {hiddenCount > 0 && (
+          <>
+            {showExtra && (
+              <div className="de-members-grid" style={{ marginTop: "1.25rem" }}>
+                {hiddenMembers.map((m, i) => (
+                  <MemberCard key={m.id} m={m} i={i} />
+                ))}
+              </div>
+            )}
+
+            {/* View more / hide button */}
+            <Reveal>
+              <div className="de-members-more">
+                <button
+                  className="de-members-more-btn"
+                  onClick={() => setShowExtra((v) => !v)}
+                >
+                  {showExtra ? (
+                    <>⬆ Hide Members</>
+                  ) : (
+                    <>
+                      ⚔ View {hiddenCount} More Warrior
+                      {hiddenCount > 1 ? "s" : ""} in the Empire
+                    </>
+                  )}
+                </button>
+                {!showExtra && (
+                  <p className="de-members-more-sub">
+                    WE ARE IN NEED OF ACTIVE PLAYERS
+                  </p>
+                )}
+              </div>
+            </Reveal>
+          </>
+        )}
+
+        {/* No extra members */}
+        {hiddenCount === 0 && (
+          <Reveal>
+            <p
+              style={{
+                textAlign: "center",
+                color: "var(--muted)",
+                fontSize: "0.85rem",
+                marginTop: "1.25rem",
+                letterSpacing: "2px",
+              }}
+            >
+              WE ARE IN NEED OF ACTIVE PLAYERS —{" "}
+              <a
+                href="https://chat.whatsapp.com/ILrD9Lkbajv809fVfwj5lD"
+                target="_blank"
+                rel="noreferrer"
+                style={{ color: "var(--blood-bright)" }}
+              >
+                JOIN NOW
+              </a>
+            </p>
+          </Reveal>
+        )}
       </div>
 
       {/* MODAL */}
@@ -216,7 +281,6 @@ export default function Members() {
               <img src={getImage(selected)} alt={selected.name} />
             </div>
 
-            {/* Upload button */}
             {uploadEnabled && (
               <MemberUpload
                 memberName={selected.id}
@@ -240,9 +304,7 @@ export default function Members() {
                 </span>
                 <span className="de-modal-stat-label">Game Rank</span>
               </div>
-
               <div className="de-modal-stat-divider" />
-
               <div className="de-modal-stat">
                 <span
                   className="de-modal-stat-num"
@@ -252,9 +314,7 @@ export default function Members() {
                 </span>
                 <span className="de-modal-stat-label">Play Style</span>
               </div>
-
               <div className="de-modal-stat-divider" />
-
               <div className="de-modal-stat">
                 <span
                   className="de-modal-stat-num"

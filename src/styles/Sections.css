@@ -176,6 +176,47 @@
 .de-member-kd { font-size: 0.85rem; color: var(--muted); }
 .de-member-kd span { color: var(--gold); font-weight: 700; }
 
+/* VIEW MORE MEMBERS */
+.de-members-more {
+  text-align: center;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.de-members-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: transparent;
+  border: 1px solid var(--blood-bright);
+  color: var(--blood-bright);
+  padding: 0.7rem 2rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+.de-members-more-btn:hover {
+  background: var(--blood);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(204,0,0,0.3);
+  transform: translateY(-2px);
+}
+
+.de-members-more-sub {
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
 /* ============================
    ACHIEVEMENTS
 ============================ */

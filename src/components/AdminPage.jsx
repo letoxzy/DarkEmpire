@@ -417,7 +417,12 @@ export default function AdminPage() {
                 />
                 <button
                   className="admin-btn-remove"
-                  onClick={() => removeMember(m.id)}
+                  onClick={() => {
+                    const confirm = window.confirm(
+                      `Are you sure you want to remove ${m.name}?\nRole: ${m.rank}`,
+                    );
+                    if (confirm) removeMember(m.id);
+                  }}
                 >
                   ✕
                 </button>
