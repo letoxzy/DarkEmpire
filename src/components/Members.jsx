@@ -4,6 +4,7 @@ import MemberUpload from "./MemberUpload";
 import "../styles/Sections.css";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import { doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
 
 const MEMBERS = [
   {
@@ -108,31 +109,33 @@ export default function Members() {
   const [showExtra, setShowExtra] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Load member images
-        const docRef = doc(db, "clan", "memberImages");
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) setImages(docSnap.data());
-
-        // Load upload toggle
-        const settingsSnap = await getDoc(doc(db, "clan", "settings"));
-        if (settingsSnap.exists()) {
-          setUploadEnabled(settingsSnap.data().uploadEnabled ?? true);
-        }
-
-        // Load ALL members from Firestore
-        const membersSnap = await getDoc(doc(db, "clan", "memberList"));
-        if (membersSnap.exists() && membersSnap.data().list?.length > 0) {
-          setAllMembers(membersSnap.data().list);
-        } else {
-          setAllMembers(MEMBERS);
-        }
-      } catch (error) {
-        console.error("Firestore fetch error:", error);
+    // Real-time listener for members
+    const membersUnsub = onSnapshot(doc(db, "clan", "memberList"), (snap) => {
+      if (snap.exists() && snap.data().list?.length > 0) {
+        setAllMembers(snap.data().list);
+      } else {
+        setAllMembers(MEMBERS);
       }
+    });
+
+    // Real-time listener for images
+    const imagesUnsub = onSnapshot(doc(db, "clan", "memberImages"), (snap) => {
+      if (snap.exists()) setImages(snap.data());
+    });
+
+    // Real-time listener for settings
+    const settingsUnsub = onSnapshot(doc(db, "clan", "settings"), (snap) => {
+      if (snap.exists()) {
+        setUploadEnabled(snap.data().uploadEnabled ?? true);
+      }
+    });
+
+    // Cleanup listeners when component unmounts
+    return () => {
+      membersUnsub();
+      imagesUnsub();
+      settingsUnsub();
     };
-    fetchData();
   }, []);
 
   const getImage = (member) =>
