@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import { Reveal } from "./Reveal";
 import MemberUpload from "./MemberUpload";
 import "../styles/Sections.css";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, setDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
-import { doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
 
 const MEMBERS = [
   {
