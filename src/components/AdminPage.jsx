@@ -211,6 +211,10 @@ export default function AdminPage() {
           </div>
           <h1 className="admin-login-title">DARKEMPIRE</h1>
           <p className="admin-login-sub">Admin Access Only</p>
+          <p className="admin-login-notice">
+            🔒 This is the official DarkEmpire clan admin panel. Authorized
+            personnel only.
+          </p>
           <form onSubmit={handleLogin} className="admin-login-form">
             <input
               type="email"
